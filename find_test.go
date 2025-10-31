@@ -1,0 +1,53 @@
+package stringx_test
+
+import (
+	"fmt"
+	. "github.com/noho-digital/insurews/pkg/strings"
+	"github.com/noho-digital/insurews/pkg/suite"
+	. "github.com/onsi/gomega"
+	"testing"
+)
+
+func TestFind(t *testing.T) {
+	suite.Run(t, new(FindSuite))
+}
+
+type FindSuite struct {
+	suite.GoblinSuite
+}
+
+func (s *FindSuite) TestFind() {
+	target := StringSlice{"cartwheel", "foobar", "wheel", "baz"}
+	expected := StringSlice{"cartwheel", "wheel"}
+	expectedSet := NewStringSet(expected...)
+	source := "whl"
+	findMsg := fmt.Sprintf("should find matches for '%s' in %s", source, target)
+	notFindMsg := fmt.Sprintf("should NOT find matches for '%s' in %s", source, target)
+	equalMsg := fmt.Sprintf("should match %s for  '%s' in %s", expected, source, target)
+	notEqualMessage := fmt.Sprintf("should NOT match %s for  '%s' in %s", expected, source, target)
+	s.G.Describe("Fuzzy find tests", func() {
+		for _, finder := range FinderValues() {
+			s.G.Describe(fmt.Sprintf("Fuzzy find with finder %s", finder.String()), func() {
+				results := FindWith(finder, source, target)
+				if finder.IsFuzzy() {
+					s.G.It(findMsg, func() {
+						Expect(results).ToNot(BeEmpty())
+					})
+					resultSet := NewStringSet(results...)
+					s.G.It(equalMsg, func() {
+						Expect(expectedSet.Equal(resultSet)).To(BeTrue(), "%s != %s", results, expected)
+					})
+				} else {
+					s.G.It(notFindMsg, func() {
+						Expect(results).To(BeEmpty())
+					})
+					resultSet := NewStringSet(results...)
+					s.G.It(notEqualMessage, func() {
+						Expect(expectedSet.Equal(resultSet)).To(BeFalse(), "%s != %s", results, expected)
+					})
+
+				}
+			})
+		}
+	})
+}
