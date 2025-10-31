@@ -1,7 +1,7 @@
 package stringx_test
 
 import (
-	"github.com/noho-digital/insurews/pkg/suite"
+	"github.com/mlwelles/suite"
 	"testing"
 )
 

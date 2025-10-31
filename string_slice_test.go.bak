@@ -2,11 +2,10 @@ package stringx_test
 
 import (
 	"github.com/franela/goblin"
-	"github.com/noho-digital/insurews/pkg/suite"
-	"github.com/noho-digital/insurews/pkg/test/reporter"
+	"github.com/mlwelles/suite"
 	"testing"
 
-	. "github.com/noho-digital/insurews/pkg/strings"
+	. "github.com/mlwelles/stringx"
 	. "github.com/onsi/gomega"
 )
 
@@ -20,7 +19,7 @@ type StringSliceSuite struct {
 
 func (s *StringSliceSuite) TestAnyString() {
 	g := goblin.Goblin(s.T())
-	g.SetReporter(reporter.NewReporter(reporter.WithDefaultsFromSettings(s.Settings)))
+	// Simple reporter setup for goblin
 	RegisterFailHandler(func(m string, _ ...int) { g.Fail(m) })
 	g.Describe("String  slice", func() {
 		g.It("Can use AnyEqual to find contents", func() {

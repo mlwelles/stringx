@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/noho-digital/insurews/pkg/strings/where"
+	"github.com/mlwelles/where"
 )
 
 func IsEmpty(s string) bool {

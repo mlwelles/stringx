@@ -2,8 +2,8 @@ package stringx_test
 
 import (
 	"fmt"
-	. "github.com/noho-digital/insurews/pkg/strings"
-	"github.com/noho-digital/insurews/pkg/suite"
+	. "github.com/mlwelles/stringx"
+	"github.com/mlwelles/suite"
 	. "github.com/onsi/gomega"
 	"testing"
 )
